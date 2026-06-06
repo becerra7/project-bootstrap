@@ -1,0 +1,29 @@
+# Cloudflare Worker — two isolated environments.
+# Secrets are NOT here: set them with `wrangler secret put <NAME> --env <env>`.
+name = "{{PROJECT}}-api"
+main = "worker/src/index.ts"
+compatibility_date = "{{TODAY}}"
+
+# Defaults / shared non-secret config.
+[vars]
+APP_ENV = "development"
+
+# ── Staging ────────────────────────────────────────────────────────────────
+[env.staging]
+name = "{{PROJECT}}-api-staging"
+route = { pattern = "api-staging.{{DOMAIN}}/*", zone_name = "{{DOMAIN}}" }
+
+[env.staging.vars]
+APP_ENV = "staging"
+SUPABASE_URL = "{{SUPABASE_STAGING_URL}}"
+# secrets (set via CLI): SUPABASE_SERVICE_ROLE_KEY, STRIPE_SECRET_KEY (test), STRIPE_WEBHOOK_SECRET
+
+# ── Production ───────────────────────────────────────────────────────────────
+[env.production]
+name = "{{PROJECT}}-api"
+route = { pattern = "api.{{DOMAIN}}/*", zone_name = "{{DOMAIN}}" }
+
+[env.production.vars]
+APP_ENV = "production"
+SUPABASE_URL = "{{SUPABASE_PROD_URL}}"
+# secrets (set via CLI): SUPABASE_SERVICE_ROLE_KEY, STRIPE_SECRET_KEY (live), STRIPE_WEBHOOK_SECRET

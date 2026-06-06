@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>{{SCREEN_NAME}} — preview ({{PRODUCT_NAME}})</title>
+<!--
+  Token-based design preview. Edit ONLY the CSS variables below (mirrored from
+  design/tokens.json semantic layer) and the .screen markup. This is what the
+  user approves BEFORE the Compose implementation. Keep values in sync with
+  tokens.json — ideally generate _tokens.css from tokens.json and @import it.
+-->
+<style>
+  :root, .light {
+    --color-background: #F9FAFB;
+    --color-surface: #FFFFFF;
+    --color-on-surface: #111827;
+    --color-on-surface-muted: #6B7280;
+    --color-primary: #2563EB;
+    --color-on-primary: #FFFFFF;
+    --color-danger: #EF4444;
+    --space-gutter: 16px;
+    --space-section: 32px;
+    --radius-card: 12px;
+    --radius-control: 8px;
+    --text-display: 34px;
+    --text-title: 20px;
+    --text-body: 16px;
+    --text-caption: 12px;
+  }
+  .dark {
+    --color-background: #111827;
+    --color-surface: #1B2230;
+    --color-on-surface: #F9FAFB;
+    --color-on-surface-muted: #9CA3AF;
+    --color-primary: #3B82F6;
+    --color-on-primary: #111827;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: system-ui, sans-serif; background: #E5E7EB; padding: 24px; }
+  h1.page { font: 600 14px system-ui; color: #374151; margin: 0 0 16px; }
+  .grid { display: grid; grid-template-columns: 390px 1fr; gap: 24px; align-items: start; }
+  .frame { background: var(--color-background); color: var(--color-on-surface);
+           border-radius: 16px; overflow: hidden; box-shadow: 0 8px 24px rgba(0,0,0,.12); }
+  .frame .label { font: 600 12px system-ui; padding: 8px 12px; background: rgba(0,0,0,.06);
+                  color: var(--color-on-surface-muted); }
+  .desktop { min-height: 480px; }
+
+  /* ── Reusable components, styled ONLY from tokens (mirror CATALOG.md) ── */
+  .screen { padding: var(--space-gutter); display: flex; flex-direction: column; gap: var(--space-gutter); }
+  .title { font-size: var(--text-title); font-weight: 600; }
+  .display { font-size: var(--text-display); font-weight: 700; }
+  .muted { color: var(--color-on-surface-muted); font-size: var(--text-caption); }
+  .card { background: var(--color-surface); border-radius: var(--radius-card);
+          padding: var(--space-gutter); box-shadow: 0 1px 3px rgba(0,0,0,.1); }
+  .btn { border: 0; border-radius: var(--radius-control); padding: 12px 16px;
+         font: 600 var(--text-body) system-ui; cursor: pointer; }
+  .btn-primary { background: var(--color-primary); color: var(--color-on-primary); }
+  .btn-text { background: transparent; color: var(--color-primary); }
+  .row { display: flex; justify-content: space-between; align-items: center; }
+</style>
+</head>
+<body>
+<h1 class="page">{{SCREEN_NAME}} — light/dark × mobile/desktop. Approve before implementation.</h1>
+
+<!-- Define the screen ONCE; it is reused across all four frames below. -->
+<template id="screen-tpl">
+  <div class="screen">
+    <div class="row">
+      <div>
+        <div class="muted">{{SECTION_LABEL}}</div>
+        <div class="display">{{HERO_VALUE}}</div>
+      </div>
+      <button class="btn btn-text">{{SECONDARY_ACTION}}</button>
+    </div>
+
+    <div class="card">
+      <div class="title">{{CARD_TITLE}}</div>
+      <p class="muted">{{CARD_BODY}}</p>
+    </div>
+
+    <!-- States to review: show empty / loading / error variants here too. -->
+
+    <button class="btn btn-primary">{{PRIMARY_ACTION}}</button>
+  </div>
+</template>
+
+<div class="grid">
+  <div class="frame light"><div class="label">Mobile · Light</div><div class="mount"></div></div>
+  <div class="frame light desktop"><div class="label">Desktop · Light</div><div class="mount"></div></div>
+  <div class="frame dark"><div class="label">Mobile · Dark</div><div class="mount"></div></div>
+  <div class="frame dark desktop"><div class="label">Desktop · Dark</div><div class="mount"></div></div>
+</div>
+
+<script>
+  const tpl = document.getElementById('screen-tpl').content;
+  document.querySelectorAll('.mount').forEach(m => m.appendChild(tpl.cloneNode(true)));
+</script>
+</body>
+</html>

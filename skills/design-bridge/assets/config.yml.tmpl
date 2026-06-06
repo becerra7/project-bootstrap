@@ -1,0 +1,30 @@
+# design/config.yml — how this project handles design.
+# Chosen at /new-project; change anytime (the design-bridge skill adapts).
+
+# Which external visual tool drives design:
+#   stitch  -> programmatic, fluid loop via the Stitch MCP (agent renders, you review in chat)
+#   claude  -> Claude Design canvas (manual, agent-guided prompt packs + handoff ingest)
+#   none    -> agent-only; manifest + Compose, optional cheap HTML gallery
+tool: stitch
+
+# Source-of-truth format for the design system (kept in sync):
+system_file: design/DESIGN.md      # Stitch open format
+tokens_file: design/tokens.json    # W3C Design Tokens format
+
+# Code target the manifest maps to:
+ui_target: compose-multiplatform   # | react | none
+
+# Review surfaces to verify on every screen change:
+verify:
+  themes: [light, dark]
+  sizes: [compact, expanded]        # ~360dp phone, desktop
+
+# Stitch options (only used when tool: stitch)
+stitch:
+  project: "{{STITCH_PROJECT}}"     # Stitch project id/name
+  mcp_server: stitch                # name in mcp config
+
+# Claude Design options (only used when tool: claude)
+claude:
+  # Claude Design reads the repo; the agent titles each artifact with the screen id.
+  title_with_screen_id: true

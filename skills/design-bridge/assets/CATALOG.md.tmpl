@@ -1,0 +1,46 @@
+# Component catalog — {{PRODUCT_NAME}}
+
+> The contract for every reusable UI component. Before building a new screen,
+> check here first. Before adding a component, add its spec here. Every entry
+> must be rendered in the Style Gallery screen.
+
+For each component document: **purpose · variants · states · tokens used · do/don't**.
+
+---
+
+## Button
+
+- **Purpose:** primary action trigger.
+- **Variants:** `primary`, `secondary`, `text`, `danger`.
+- **States:** default, hover/pressed, disabled, loading.
+- **Tokens:** `component.button.*`, `semantic.color.*`, `radius.control`.
+- **Do:** one `primary` button per view. **Don't:** invent new colors per screen.
+
+## Card
+
+- **Purpose:** group related content on a surface.
+- **Variants:** `flat`, `elevated`.
+- **States:** default, selected, disabled.
+- **Tokens:** `component.card.*`.
+
+## TextField
+
+- **Purpose:** single-line/multiline input.
+- **Variants:** `default`, `error`.
+- **States:** empty, focused, filled, error, disabled.
+- **Tokens:** `semantic.color.surface/onSurface/danger`, `radius.control`, `space.gutter`.
+
+## ListItem / Row
+
+- **Purpose:** repeated row in lists.
+- **Variants:** `oneLine`, `twoLine`, `withTrailing`.
+
+## AppScaffold (adaptive)
+
+- **Purpose:** top-level shell. Bottom bar (Compact) ↔ rail/drawer (Expanded).
+- **Tokens:** `semantic.color.background/surface`, `space.section`.
+
+---
+
+<!-- Add new components ABOVE this line. Never duplicate an existing one;
+     extend it with a new variant instead. -->

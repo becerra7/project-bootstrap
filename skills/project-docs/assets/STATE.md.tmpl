@@ -1,0 +1,33 @@
+# {{PRODUCT_NAME}} — current state
+
+> The dashboard. Read this first to understand the project right now. Keep it to
+> one screen; link out to feature docs for detail. Updated on every feature
+> create/iterate/deprecate.
+
+**Last updated:** {{DATE}}  ·  **Stage:** {{stage: prototype | beta | production}}
+
+## In one line
+{{One-sentence description of what the product does today.}}
+
+## Environments
+| Env | Web (Cloudflare Pages) | Backend (Supabase) | Mobile |
+| --- | ---------------------- | ------------------ | ------ |
+| production | {{prod-url}} | {{prod-ref}} | Firebase: {{group}} |
+| staging | {{staging-url}} | {{staging-ref}} | — |
+
+## Feature index
+| Feature | Status | Doc | Last change |
+| ------- | ------ | --- | ----------- |
+| {{Feature}} | live / in-progress / planned / deprecated | [doc](features/{{feature}}.md) | {{date}} |
+
+## Infrastructure
+- Auth: {{Supabase Google sign-in / ...}}
+- Worker: {{none | api with staging+production}}
+- Payments: {{none | Stripe (test+live)}}
+- CI/CD: {{workflows present}} · branch model: main / staging / cursor-*
+
+## Open threads / next up
+- {{the few things most likely to be worked on next}}
+
+## Known gaps / tech debt
+- {{honest list, short}}

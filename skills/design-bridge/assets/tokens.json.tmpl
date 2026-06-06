@@ -1,0 +1,54 @@
+{
+  "$schema": "Design tokens — single source of truth. 3 layers: primitive -> semantic -> component. Screens use ONLY semantic/component tokens.",
+  "primitive": {
+    "color": {
+      "blue-500": "#3B82F6",
+      "blue-600": "#2563EB",
+      "gray-0": "#FFFFFF",
+      "gray-50": "#F9FAFB",
+      "gray-100": "#F3F4F6",
+      "gray-500": "#6B7280",
+      "gray-900": "#111827",
+      "red-500": "#EF4444",
+      "green-500": "#22C55E"
+    },
+    "space": { "0": 0, "1": 4, "2": 8, "3": 12, "4": 16, "5": 24, "6": 32, "8": 48 },
+    "radius": { "sm": 8, "md": 12, "lg": 20, "full": 9999 },
+    "fontSize": { "100": 12, "200": 14, "300": 16, "400": 20, "500": 28, "600": 34 },
+    "elevation": { "0": 0, "1": 1, "2": 3 }
+  },
+  "semantic": {
+    "light": {
+      "color.background": "primitive.color.gray-50",
+      "color.surface": "primitive.color.gray-0",
+      "color.onSurface": "primitive.color.gray-900",
+      "color.onSurfaceMuted": "primitive.color.gray-500",
+      "color.primary": "primitive.color.blue-600",
+      "color.onPrimary": "primitive.color.gray-0",
+      "color.danger": "primitive.color.red-500",
+      "color.success": "primitive.color.green-500"
+    },
+    "dark": {
+      "color.background": "primitive.color.gray-900",
+      "color.surface": "#1B2230",
+      "color.onSurface": "primitive.color.gray-50",
+      "color.onSurfaceMuted": "primitive.color.gray-500",
+      "color.primary": "primitive.color.blue-500",
+      "color.onPrimary": "primitive.color.gray-900",
+      "color.danger": "primitive.color.red-500",
+      "color.success": "primitive.color.green-500"
+    },
+    "space.gutter": "primitive.space.4",
+    "space.section": "primitive.space.6",
+    "radius.card": "primitive.radius.md",
+    "radius.control": "primitive.radius.sm",
+    "text.display": { "size": "primitive.fontSize.600", "weight": 700 },
+    "text.title": { "size": "primitive.fontSize.400", "weight": 600 },
+    "text.body": { "size": "primitive.fontSize.300", "weight": 400 },
+    "text.caption": { "size": "primitive.fontSize.100", "weight": 400 }
+  },
+  "component": {
+    "button.primary": { "bg": "semantic.color.primary", "fg": "semantic.color.onPrimary", "radius": "semantic.radius.control", "paddingX": "primitive.space.4", "paddingY": "primitive.space.3" },
+    "card": { "bg": "semantic.color.surface", "radius": "semantic.radius.card", "padding": "semantic.space.gutter", "elevation": "primitive.elevation.1" }
+  }
+}

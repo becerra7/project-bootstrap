@@ -1,0 +1,44 @@
+import org.jetbrains.compose.ExperimentalComposeLibrary
+
+plugins {
+    alias(libs.plugins.kotlinMultiplatform)
+    alias(libs.plugins.composeMultiplatform)
+    alias(libs.plugins.composeCompiler)
+    // Android application plugin applied conditionally when -Pandroid.enabled=true
+}
+
+val androidEnabled = (findProperty("android.enabled") as String?)?.toBoolean() ?: false
+
+// Inject Supabase config at build time from env / gradle props (never hardcode).
+val supabaseUrl = (findProperty("SUPABASE_URL") as String?) ?: System.getenv("SUPABASE_URL") ?: ""
+val supabaseKey = (findProperty("SUPABASE_PUBLISHABLE_KEY") as String?) ?: System.getenv("SUPABASE_PUBLISHABLE_KEY") ?: ""
+
+kotlin {
+    if (androidEnabled) {
+        // androidTarget() — see MODULE_MAP.md for the conditional Android block.
+    }
+
+    wasmJs {
+        browser {
+            commonWebpackConfig {
+                outputFileName = "composeApp.js"
+            }
+        }
+        binaries.executable()
+    }
+
+    sourceSets {
+        commonMain.dependencies {
+            implementation(project(":shared"))
+            implementation(compose.runtime)
+            implementation(compose.foundation)
+            implementation(compose.material3)
+            implementation(compose.components.resources)
+            implementation(libs.koin.compose)
+            implementation(libs.koin.compose.viewmodel)
+        }
+    }
+}
+
+// Generate a BuildConfig-like object exposing SUPABASE_URL / SUPABASE_PUBLISHABLE_KEY.
+// See supabase-backend skill for the generated `AppConfig` expect/actual pattern.

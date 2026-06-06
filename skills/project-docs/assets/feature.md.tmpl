@@ -1,0 +1,36 @@
+# Feature: {{Feature name}}
+
+**Status:** planned | in-progress | live | deprecated  ·  **Owner:** {{who}}  ·
+**Updated:** {{DATE}}
+
+## Purpose
+{{What user problem this solves, in 1–3 sentences.}}
+
+## User stories
+- As a {{user}}, I can {{action}} so that {{value}}.
+
+## Behaviour / rules
+- {{The rules that must hold. This is the regression checklist when iterating.}}
+
+## Design
+- Approved preview: [`design/preview/{{feature}}.html`](../../design/preview/{{feature}}.html)
+- Components used (from CATALOG.md): {{Button, Card, ...}}
+- New tokens introduced: {{none | list}}
+
+## Data model
+- Supabase table(s): `{{table}}` — key columns, RLS policy ({{auth.uid() = user_id}}).
+- Migration(s): `supabase/migrations/{{NNN_...}}.sql`
+
+## Code map (where it lives — keep current; read before iterating)
+- Domain: `shared/domain/model/{{X}}.kt`, `usecase/{{...}}UseCase.kt`, `repository/{{X}}Repository.kt`
+- Data: `shared/data/remote/dto/{{X}}Dto.kt`, `mapper/{{X}}Mapper.kt`,
+  `datasource/{{...}}DataSource.kt`, `repository/{{X}}RepositoryImpl.kt`
+- Presentation: `composeApp/.../presentation/{{feature}}/{UiState,ViewModel,Screen}.kt`
+- DI: registered in `{{dataModule / domainModule / appModule}}`
+
+## Decisions / trade-offs
+- {{Notable choices and why; what was deliberately left out.}}
+
+## Change history
+- {{DATE}} — created (first vertical slice).
+- {{DATE}} — {{what changed in this iteration}}.

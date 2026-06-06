@@ -1,0 +1,32 @@
+// Playwright auth setup — log in a dedicated staging test user ONCE and save the
+// session so every test/screenshot starts authenticated. Avoids automating
+// Google consent. Run as a Playwright "setup" project that other projects depend on.
+//
+//   playwright.config.ts: a `setup` project writes storageState; others use it.
+import { test as setup, expect } from '@playwright/test';
+import { createClient } from '@supabase/supabase-js';
+
+const STORAGE = 'playwright/.auth/state.json';
+
+setup('authenticate test user', async ({ page }) => {
+  const url = process.env.SUPABASE_URL!;
+  const anon = process.env.SUPABASE_PUBLISHABLE_KEY!;
+  const email = process.env.E2E_TEST_EMAIL!;
+  const password = process.env.E2E_TEST_PASSWORD!;
+
+  // Mint a Supabase session directly (email/password) — no Google flow needed.
+  const supabase = createClient(url, anon);
+  const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+  if (error) throw error;
+  const session = data.session!;
+
+  // Seed the session into the app origin's localStorage, then save storage state.
+  await page.goto(process.env.E2E_BASE_URL || 'http://localhost:8080');
+  await page.evaluate(([u, s]) => {
+    const ref = new URL(u as string).host.split('.')[0];
+    localStorage.setItem(`sb-${ref}-auth-token`, JSON.stringify(s));
+  }, [url, session]);
+
+  await page.reload();
+  await page.context().storageState({ path: STORAGE });
+});

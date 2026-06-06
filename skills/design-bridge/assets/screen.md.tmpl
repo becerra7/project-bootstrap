@@ -1,0 +1,34 @@
+# Screen: {{screen-id}}
+
+> Stable key used everywhere: this file, the Compose screen, screen-map.json, and
+> the artifact TITLE in Stitch/Claude Design. Never rename without updating the map.
+
+**Title:** {{Human Title}}  ·  **Status:** draft | designed | implemented
+**Fingerprint:** {{auto-hash of the spec below — updated by the agent on change}}
+**Last render:** [renders/{{screen-id}}.png](../renders/{{screen-id}}.png)
+
+## Purpose
+{{What this screen is for, in 1–2 sentences.}}
+
+## Layout tree (regions → components)
+- AppScaffold (adaptive)
+  - Header: {{Title}} + {{action}}
+  - Body:
+    - {{Card: …}}
+    - {{List: …}}
+  - {{FAB / bottom action}}
+
+## Components used (from CATALOG.md)
+- {{Button(primary), Card(elevated), ListItem(twoLine), …}}
+
+## States
+- empty: {{…}}  · loading: {{…}}  · error: {{…}}  · success: {{…}}
+
+## Data bindings
+- {{field}} ← {{UiState.field}} ← {{UseCase}} ← {{table/column}}
+
+## Tokens (only semantic; new ones must be added to tokens.json first)
+- {{color.surface, text.title, space.gutter, …}}
+
+## Change history
+- {{DATE}} — created/updated: {{what changed}}.

@@ -1,0 +1,30 @@
+# Prompt pack — modify screen `{{screen-id}}`  (tool: {{stitch|claude}})
+
+> The agent fills the {{…}} from the manifest, shows you this to refine, saves it
+> under design/prompts/, then either calls the tool (Stitch) or hands it to you
+> to paste (Claude Design).
+
+## 1. Prompt to paste into the design tool
+```
+You are extending an existing product's design system. Read DESIGN.md (and the
+codebase) for the current tokens and components — REUSE them, do not invent new
+styles.
+
+Screen to modify: "{{screen-id}}"  ← title the artifact exactly this.
+Current purpose: {{purpose}}
+Change requested: {{the specific change}}
+Use only these tokens/components: {{relevant subset}}
+Keep unchanged: {{what must NOT change}}
+Acceptance criteria: {{bullet list}}
+Render light + dark, mobile + desktop.
+```
+
+## 2. What to do in the tool
+- {{stitch: nothing — the agent runs this via MCP and shows you the render}}
+- {{claude: iterate on the canvas until it meets the criteria}}
+
+## 3. What to hand back
+- {{stitch: nothing — the agent fetches the screen image + code by id}}
+- {{claude: Export → "Hand off to Claude Code" (or download the bundle) and bring
+   it here. The bundle may include every screen; the agent will apply ONLY
+   `{{screen-id}}` (matched by title + verified by diff) and skip the rest.}}

@@ -1,0 +1,15 @@
+# Secrets — readable local mirror is NEVER committed (see secrets-manager)
+secrets/secrets.local.env
+.env
+*.local.env
+
+# Playwright auth/session state
+**/.auth/
+playwright/.auth/
+
+# OS / editor
+.DS_Store
+*.log
+
+# Tool-generated symlinks created by bin/link.sh in CONSUMER projects
+# (not relevant in this kit repo, listed for clarity)

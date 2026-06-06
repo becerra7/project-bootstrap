@@ -1,0 +1,85 @@
+name: Deploy Web
+
+# Manual-only: trigger from the Actions tab and pick the target environment.
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Cloudflare Pages target'
+        type: choice
+        required: true
+        default: staging
+        options:
+          - staging
+          - production
+
+env:
+  GRADLE_VERSION: '8.9'
+
+jobs:
+  web:
+    name: Web build & deploy
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v3
+        with:
+          gradle-version: ${{ env.GRADLE_VERSION }}
+          cache-read-only: false
+
+      - name: Cache module build outputs
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.konan
+            ~/.gradle/nodejs
+            ~/.gradle/yarn
+            .kotlin
+            shared/build
+            composeApp/build
+            !composeApp/build/dist
+            !composeApp/build/outputs
+          key: ${{ runner.os }}-build-wasm-${{ hashFiles('**/*.gradle.kts', 'gradle/libs.versions.toml', 'gradle.properties') }}-${{ github.ref_name }}
+          restore-keys: |
+            ${{ runner.os }}-build-wasm-${{ hashFiles('**/*.gradle.kts', 'gradle/libs.versions.toml', 'gradle.properties') }}-
+            ${{ runner.os }}-build-wasm-
+
+      - name: Build web (wasmJs)
+        run: gradle :composeApp:wasmJsBrowserDistribution
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_PUBLISHABLE_KEY: ${{ secrets.SUPABASE_PUBLISHABLE_KEY }}
+
+      - name: Locate build output
+        id: find_output
+        run: |
+          set -e
+          DIR="composeApp/build/dist/wasmJs/productionExecutable"
+          if [ ! -d "$DIR" ]; then
+            DIR=$(find composeApp/build -type f -name "*.wasm" -exec dirname {} \; 2>/dev/null | head -1)
+          fi
+          [ -d "$DIR" ] || { echo "No deployable output"; exit 1; }
+          echo "deploy_dir=$DIR" >> "$GITHUB_OUTPUT"
+
+      - name: Resolve Cloudflare branch
+        id: cf
+        run: |
+          if [ "${{ inputs.environment }}" = "production" ]; then
+            echo "branch=main" >> "$GITHUB_OUTPUT"
+          else
+            echo "branch=staging" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Deploy to Cloudflare Pages
+        run: npx wrangler@3 pages deploy "${{ steps.find_output.outputs.deploy_dir }}" --project-name={{PROJECT}} --branch=${{ steps.cf.outputs.branch }} --commit-dirty=true
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}

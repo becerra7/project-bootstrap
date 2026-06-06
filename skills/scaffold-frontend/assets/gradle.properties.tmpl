@@ -1,0 +1,13 @@
+kotlin.code.style=official
+org.gradle.jvmargs=-Xmx4096M -Dfile.encoding=UTF-8
+org.gradle.caching=true
+org.gradle.configuration-cache=true
+
+# Compose Multiplatform / wasmJs
+kotlin.daemon.jvmargs=-Xmx2048M
+
+# Gate the Android target so web-only CI never needs the Android SDK.
+# Pass -Pandroid.enabled=true to include the Android application module.
+android.enabled=false
+android.useAndroidX=true
+android.nonTransitiveRClass=true

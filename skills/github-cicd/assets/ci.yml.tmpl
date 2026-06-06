@@ -1,0 +1,50 @@
+name: CI
+
+# Gate that keeps staging/main green. Runs on every PR + pushes to those branches.
+on:
+  pull_request:
+    branches: [main, staging]
+  push:
+    branches: [main, staging]
+
+env:
+  GRADLE_VERSION: '8.9'
+
+jobs:
+  build:
+    name: Build & test (web target)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v3
+        with:
+          gradle-version: ${{ env.GRADLE_VERSION }}
+
+      - name: Cache module build outputs
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.konan
+            ~/.gradle/nodejs
+            ~/.gradle/yarn
+            .kotlin
+            shared/build
+            composeApp/build
+            !composeApp/build/dist
+            !composeApp/build/outputs
+          key: ${{ runner.os }}-ci-${{ hashFiles('**/*.gradle.kts', 'gradle/libs.versions.toml', 'gradle.properties') }}
+          restore-keys: ${{ runner.os }}-ci-
+
+      - name: Compile + unit tests
+        run: gradle :shared:allTests :composeApp:compileKotlinWasmJs
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_PUBLISHABLE_KEY: ${{ secrets.SUPABASE_PUBLISHABLE_KEY }}
