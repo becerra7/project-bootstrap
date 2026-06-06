@@ -1,0 +1,12 @@
+{
+  "$comment": "PROJECT-SCOPED MCP. Copy to the target project root as `.mcp.json` (Claude Code / Codex) and/or `.cursor/mcp.json` (Cursor). Only servers pinned to THIS project belong here — chiefly Supabase, which is scoped to one project_ref. Account-wide servers (GitHub, Cloudflare, Stitch, Playwright, Context7, Firebase) go at USER scope instead (see mcp.user.json) so they are shared across all your projects and safe to run in parallel. Values use ${env:VAR}; never commit real secrets.",
+  "mcpServers": {
+    "supabase": {
+      "type": "http",
+      "url": "https://mcp.supabase.com/mcp?project_ref=${env:SUPABASE_PROJECT_REF}&read_only=true",
+      "headers": {
+        "Authorization": "Bearer ${env:SUPABASE_ACCESS_TOKEN}"
+      }
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "$comment": "USER-SCOPED MCP. Install ONCE per machine; shared by every project and safe to run in parallel (these servers are account-wide or stateless). For Claude Code use `claude mcp add --scope user ...` per server, or merge into ~/.claude.json. For Cursor, put these in ~/.cursor/mcp.json. Values use ${env:VAR}; set them once in your shell profile / OS keychain. See the `mcp` and `secrets-manager` skills.",
+  "mcpServers": {
+    "github": {
+      "url": "https://api.githubcopilot.com/mcp/",
+      "headers": { "Authorization": "Bearer ${env:GITHUB_PAT}" }
+    },
+    "cloudflare-bindings": {
+      "url": "https://bindings.mcp.cloudflare.com/mcp"
+    },
+    "cloudflare-observability": {
+      "url": "https://observability.mcp.cloudflare.com/mcp"
+    },
+    "stitch": {
+      "command": "npx",
+      "args": ["-y", "@keeponfirst/kof-stitch-mcp"],
+      "env": { "STITCH_API_KEY": "${env:STITCH_API_KEY}" }
+    },
+    "playwright": {
+      "command": "npx",
+      "args": ["-y", "@playwright/mcp@latest"]
+    },
+    "context7": {
+      "command": "npx",
+      "args": ["-y", "@upstash/context7-mcp"]
+    },
+    "firebase": {
+      "command": "npx",
+      "args": ["-y", "firebase-tools@latest", "experimental:mcp"]
+    }
+  }
+}
