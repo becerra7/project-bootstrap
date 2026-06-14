@@ -10,9 +10,13 @@
 An agentic, end-to-end software-delivery setup: take an idea → ship a product,
 with the **least possible configuration from the user**. It encodes a standard
 stack and pipeline as portable skills, subagents, commands, behaviors, and MCP
-config. Canonical source lives in `.agents/`; `bin/link.sh` exposes it to each
-tool. Full mental model: `docs/HOW_IT_WORKS.md`. Rationale/history:
-`docs/DECISIONS.md`.
+config. It works two ways: **greenfield** — `/new-project` (`project-bootstrap`)
+scaffolds from an idea; and **brownfield** — `/adopt-project` (`project-adoption`)
+brings an existing repo in by detecting its stack/features, reverse-documenting
+them, then reviewing (`/audit`), cleaning (`/cleanup`), and planning
+(`/propose-improvements`). Canonical source lives in `.agents/`; `bin/link.sh`
+exposes it to each tool. Full mental model: `docs/HOW_IT_WORKS.md`.
+Rationale/history: `docs/DECISIONS.md`.
 
 ## Prime directive: minimize human toil
 
@@ -46,7 +50,7 @@ reasonably can from defaults; ask only when it changes the product's shape.
 - **Respect the guardrails** in `conventions` (clean architecture, design tokens,
   git/PR) on every change. Keep the tree green.
 
-## The stack (defaults, override only when needed)
+## The stack (defaults for NEW projects; detect, don't assume, for adopted ones)
 
 Frontend: Kotlin Multiplatform + Compose Multiplatform (Android + adaptive
 Web/wasmJs); web-only and a React/Vite escape hatch supported. Backend: Supabase
@@ -55,6 +59,12 @@ production) only for server logic/secrets. Hosting: Cloudflare Pages (staging +
 production). Mobile: Firebase App Distribution. Payments: optional Stripe. CI/CD:
 GitHub Actions. Design: repo design manifest bridged to Stitch (programmatic) or
 Claude Design (manual), chosen per project (`design-bridge`).
+
+For an **existing** project these are not assumptions: `project-adoption` detects
+the repo's real stack/conventions and the kit respects them, applying the
+defaults and `conventions` rules only where the stack actually matches. Managed
+infra (Supabase/Cloudflare/Firebase, design manifest, secrets model) is offered as
+opt-in adoption, never a forced migration.
 
 ## Design philosophy (don't regress this)
 

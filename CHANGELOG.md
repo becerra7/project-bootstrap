@@ -3,6 +3,29 @@
 All notable changes to the kit. Newest first. Every change to the kit must add an
 entry here (see `kit-maintenance`). Format: date — summary (files/areas).
 
+## 2026-06-14 — Brownfield path: adopt & improve existing projects (D17)
+- Added **`project-adoption`** orchestrator skill + **`/adopt-project`** command —
+  the brownfield mirror of `project-bootstrap`: detect the real stack, reverse-
+  engineer features, reverse-document into `docs/STATE.md` + `docs/features/*`
+  (via `project-docs`), and reconcile infra/MCP/secrets. Stack-aware; read-only
+  (makes no code changes). (`.agents/skills/project-adoption/SKILL.md`,
+  `.agents/commands/adopt-project.md`)
+- Added **`code-audit`** skill + **`/audit`** command + **`code-auditor`** read-only
+  subagent — severity-ranked findings (P0→P3) with evidence into `docs/AUDIT.md`,
+  fan-out by area/lens for large repos. (`.agents/skills/code-audit/SKILL.md`,
+  `.agents/commands/audit.md`, `.agents/subagents/code-auditor.md`)
+- Added **`codebase-cleanup`** skill + **`/cleanup`** command — safe, behaviour-
+  preserving fixes from the audit, one concern per commit. (`.agents/skills/
+  codebase-cleanup/SKILL.md`, `.agents/commands/cleanup.md`)
+- Added **`improvement-planning`** skill + **`/propose-improvements`** command —
+  detected features + audit → prioritised, routed `docs/ROADMAP.md`. (`.agents/
+  skills/improvement-planning/SKILL.md`, `.agents/commands/propose-improvements.md`)
+- Cross-references: `README.md` (new "Adopt an existing project" section + command
+  groups), `AGENTS.md` (two entry paths; detect-don't-assume for adopted stacks),
+  `docs/HOW_IT_WORKS.md` (brownfield entry diagram), `docs/ARCHITECTURE.md` (file
+  map + "what an existing project gets"), `docs/DECISIONS.md` (D17),
+  `project-bootstrap` (greenfield cross-link), `parallel-agents` (`code-auditor` role).
+
 ## 2026-06-06 — Standalone, tool-agnostic, self-improving kit (v0.1)
 - Restructured into a standalone repo with neutral `.agents/` source + `AGENTS.md`
   constitution + `bin/link.sh` adapters for Cursor/Claude/Codex (D14, D15).

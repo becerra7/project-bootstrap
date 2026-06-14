@@ -22,8 +22,13 @@ configuration effort from the user**. Decide everything you reasonably can from
 the defaults below; only ask the user about things that genuinely change the
 shape of the product, and only ask them to *do* things that a human must do.
 
-This skill is the entry point. It does not do all the work itself — it
-**orchestrates** the focused skills and agents listed at the bottom.
+This skill is the entry point **for greenfield** — a brand-new product from an
+idea. If the user instead points the kit at a repo that **already has code**, this
+is the wrong orchestrator: use `project-adoption` (`/adopt-project`) to detect,
+reverse-document, audit, clean, and plan an existing codebase.
+
+This skill does not do all the work itself — it **orchestrates** the focused
+skills and agents listed at the bottom.
 
 ## The golden rule: minimise human toil
 

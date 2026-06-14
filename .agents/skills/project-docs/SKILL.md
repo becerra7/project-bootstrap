@@ -49,6 +49,11 @@ Docs are part of "done". Specifically:
   `STATE.md`; changelog entry.
 - **Infra/schema change**: note it in the relevant feature doc and, if broad, in
   `STATE.md`'s "Infrastructure" section.
+- **Adopt an existing project** (`/adopt-project`): bulk **reverse-document** the
+  current code into `STATE.md` + one `features/<feature>.md` per detected feature
+  (`status: adopted`), marking anything inferred. This is the brownfield on-ramp
+  that makes every command above work on a pre-existing repo (see
+  `project-adoption`).
 
 A PR that changes behaviour but not the docs is incomplete.
 

@@ -17,7 +17,11 @@ agentic-delivery-kit/
 │   └── GLOSSARY.md            # terms
 ├── .agents/                   # CANONICAL, tool-neutral content
 │   ├── skills/                # knowledge + procedures (load on demand)
-│   │   ├── project-bootstrap/ #   orchestrator (start here)
+│   │   ├── project-bootstrap/ #   orchestrator — greenfield (new project from idea)
+│   │   ├── project-adoption/  #   orchestrator — brownfield (adopt an existing repo)
+│   │   ├── code-audit/        #   review existing code → severity-ranked docs/AUDIT.md
+│   │   ├── codebase-cleanup/  #   safe, behaviour-preserving cleanups from the audit
+│   │   ├── improvement-planning/ # findings+features → routed docs/ROADMAP.md
 │   │   ├── scaffold-frontend/ #   KMP/Compose (or web) skeleton (+assets, references)
 │   │   ├── design-bridge/     #   design manifest ↔ Stitch/Claude (+assets)
 │   │   ├── supabase-backend/  #   schema, RLS, Google auth (+assets)
@@ -34,10 +38,12 @@ agentic-delivery-kit/
 │   │   ├── token-efficiency/  #   cost best-practices
 │   │   ├── parallel-agents/   #   multi-agent orchestration
 │   │   └── kit-maintenance/   #   how to change THIS kit (self-improvement)
-│   ├── subagents/             # product-architect, scaffolder, design-engineer, release-engineer
-│   ├── commands/              # new-project, ideate, design, design-brief, add-feature,
-│   │                          #   iterate-feature, add-screen, status, onboard, setup-infra,
-│   │                          #   ship, mode, improve-kit
+│   ├── subagents/             # product-architect, scaffolder, design-engineer,
+│   │                          #   release-engineer, code-auditor (read-only review)
+│   ├── commands/              # new-project, adopt-project, audit, cleanup,
+│   │                          #   propose-improvements, ideate, design, design-brief,
+│   │                          #   add-feature, iterate-feature, add-screen, status,
+│   │                          #   onboard, setup-infra, ship, mode, improve-kit
 │   └── behaviors/             # terse, explain, ship-fast, careful-review, architect
 ├── mcp/
 │   ├── mcp.user.json          # user-scope servers (shared across projects)
@@ -62,3 +68,11 @@ The skills generate, in the product repo: the app skeleton, `design/` manifest,
 `supabase/migrations`, `.github/workflows`, `wrangler*.toml`, `docs/STATE.md` +
 feature docs, `secrets/secrets.manifest.md`, and the MCP config — i.e. the kit
 produces the project; it is not the project.
+
+## What an EXISTING project gets (when adopted)
+`project-adoption` writes only *derived* state into the existing repo —
+`docs/STATE.md` + `docs/features/*` (reverse-documented from the real code),
+`docs/AUDIT.md` (`code-audit`), `docs/ROADMAP.md` (`improvement-planning`), and an
+opt-in `design/` manifest / MCP / secrets manifest — without touching the app's
+own code. Cleanups and changes are separate, reviewable steps (`/cleanup`,
+`/iterate-feature`).

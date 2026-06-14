@@ -39,6 +39,9 @@ ownership **non-overlapping** to avoid edit conflicts.
   `design-engineer` (UI) ∥ backend work → `release-engineer` (CI/deploy).
 - Fan out `design-engineer` and backend in parallel for a feature; converge at the
   ViewModel/UiState.
+- `code-auditor` (read-only review): for adopting/auditing a large existing repo,
+  fan out one auditor per area or per review lens with non-overlapping ownership,
+  then merge and de-duplicate their findings into `docs/AUDIT.md` (`code-audit`).
 
 ## Model selection per agent
 Match model to task: cheap/fast for mechanical subagents (boilerplate, renames),

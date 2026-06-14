@@ -112,3 +112,28 @@ maintainability.
 multiple agents effectively. Encoded as `/mode` + `.agents/behaviors/*`, the
 `token-efficiency` skill, and the `parallel-agents` skill, all referenced by
 `AGENTS.md`.
+
+## D17 — Brownfield path: adopt existing projects, not just bootstrap new ones
+**Context:** The kit was greenfield-only (`/new-project`); a huge share of real
+work is on codebases that already exist. **Decision:** Add a brownfield mirror of
+the bootstrap pipeline — `project-adoption` (`/adopt-project`) as a sibling
+orchestrator that **detects** the real stack + **reverse-engineers features** from
+routes/screens/endpoints/tables, **reverse-documents** them into the same
+`project-docs` state model (`docs/STATE.md` + feature docs), and reconciles
+infra/MCP/secrets; plus three focused skills/commands — `code-audit` (`/audit` →
+`docs/AUDIT.md`, read-only, with a `code-auditor` read-only subagent for fan-out),
+`codebase-cleanup` (`/cleanup`, behaviour-preserving only), and
+`improvement-planning` (`/propose-improvements` → routed `docs/ROADMAP.md`).
+**Rationale:** Recover state from code instead of creating it from an idea, then
+reuse the *entire* existing day-to-day toolchain (`/status`, `/add-feature`,
+`/iterate-feature`, `/design`, `/ship`) unchanged — adoption is just the on-ramp.
+**Key constraints:** (1) **stack-aware** — detect and respect the project's real
+stack/conventions; apply the KMP/Compose `conventions` rules and managed infra
+(Supabase/Cloudflare/Firebase) only where they match or the user opts in, never a
+forced migration (contrast D2, whose defaults are for *new* projects). (2)
+**code is the source of truth** — never document a feature/test/guarantee that
+isn't really there; mark inferred items. (3) **separation of phases** — adoption
+and audit are read-only; behaviour changes are deliberate, reviewable steps.
+**Alternatives considered:** a single "review" command (too coarse — couldn't be
+re-run per phase or routed); auto-migrating adopted projects onto the kit's stack
+(rejected — lock-in and churn, violates "respect what's there").

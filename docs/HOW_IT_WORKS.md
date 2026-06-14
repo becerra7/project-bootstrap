@@ -32,6 +32,34 @@ off; day-to-day you use `/ideate`, `/design`, `/design-brief`, `/add-feature`,
 `/iterate-feature`, `/status`, `/onboard`, `/setup-infra`, `/ship`, `/mode`,
 `/improve-kit`.
 
+## The other entry: adopting an existing project
+
+The pipeline above starts from an idea. The kit also starts from **existing
+code**. `project-adoption` (`/adopt-project`) is the brownfield mirror of
+`project-bootstrap`: instead of *creating* state from an idea, it *recovers* it
+from a repo.
+
+```
+detect stack ─▶ detect features ─▶ reverse-document ─▶ reconcile infra ─▶ report
+   │                 │                    │                   │              │
+project-adoption (orchestrator) ──▶ project-docs (STATE + feature docs)     │
+                                                                            ▼
+                          /audit ─▶ /cleanup ─▶ /propose-improvements ─▶ /add|iterate-feature
+                          code-audit  codebase-   improvement-           (same day-to-day
+                          (+code-     cleanup     planning                commands as a
+                          auditor)                                        bootstrapped repo)
+```
+
+It reverse-engineers features from routes/screens/endpoints/tables, writes them
+into the same `docs/STATE.md` + `docs/features/*` model, and is **stack-aware**
+(detects the real stack; offers the kit's managed infra as opt-in, never a forced
+migration). `code-audit` produces a severity-ranked `docs/AUDIT.md` (read-only);
+`codebase-cleanup` applies only behaviour-preserving fixes; `improvement-planning`
+turns it all into a routed `docs/ROADMAP.md`. The honesty rule throughout: **code
+is the source of truth** — never document a feature/test/guarantee that isn't
+really there. After adoption an existing project is indistinguishable from a
+bootstrapped one for every later command.
+
 ## Three big ideas
 
 ### 1. The design manifest (not a design tool lock-in)
@@ -82,6 +110,8 @@ per-type checklist (update cross-references), then records what (CHANGELOG) and 
 (DECISIONS). So the repo never drifts and history is always continuable.
 
 ## Using vs. building the kit
-- **Using it on a product**: install into the product repo (`bin/install.sh` /
-  `link.sh`), then drive with the commands.
+- **Using it on a new product**: install into the product repo (`bin/install.sh` /
+  `link.sh`), then `/new-project`.
+- **Using it on an existing product**: install into the repo, then `/adopt-project`
+  → `/audit` → `/cleanup` → `/propose-improvements`, then the day-to-day commands.
 - **Improving the kit itself**: open this repo, use `/improve-kit`.

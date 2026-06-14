@@ -12,9 +12,13 @@ getting better and stays continuable by any LLM.
 
 ## What it gives you
 
-- **One command to start:** `/new-project <idea>` scaffolds the whole stack,
+- **One command to start (new):** `/new-project <idea>` scaffolds the whole stack,
   builds a thin end-to-end slice, writes living docs, and hands you a short
   "your turn" checklist.
+- **One command to adopt (existing):** `/adopt-project` detects an existing repo's
+  stack + features, reverse-documents them into the kit's living docs, then
+  `/audit` → `/cleanup` → `/propose-improvements` review it, tidy it, and plan
+  what's next — so the kit works on code you already have, not just from zero.
 - **A real pipeline:** ideation → architecture → scaffold → design → data+auth →
   (worker) → (payments) → CI/CD → mobile → ship → iterate.
 - **Design without drift or lock-in:** a repo-owned design manifest bridged to
@@ -38,7 +42,8 @@ Stripe · GitHub Actions.
 bin/install.sh --target /path/to/your/project --tool cursor   # or claude | codex | all
 # then, inside that project:
 #   /onboard        set up MCP + secrets + provision what's automatable
-#   /new-project    scaffold the product
+#   /new-project    scaffold a product from an idea (greenfield)
+#   /adopt-project  bring an EXISTING codebase into the kit (brownfield)
 ```
 
 `bin/link.sh <tool>` symlinks the neutral `.agents/` content into `.cursor/`,
@@ -46,9 +51,29 @@ bin/install.sh --target /path/to/your/project --tool cursor   # or claude | code
 
 ## Commands
 
-`/new-project` · `/ideate` · `/design` · `/design-brief` · `/add-feature` ·
+**Start:** `/new-project` (from an idea) · `/adopt-project` (existing repo)
+
+**Existing-project workflow:** `/adopt-project` · `/audit` · `/cleanup` ·
+`/propose-improvements`
+
+**Day-to-day:** `/ideate` · `/design` · `/design-brief` · `/add-feature` ·
 `/iterate-feature` · `/add-screen` · `/status` · `/onboard` · `/setup-infra` ·
 `/ship` · `/mode` · `/improve-kit`
+
+## Adopt an existing project
+
+The kit isn't only for greenfield. Point it at a repo you already have:
+
+```text
+/adopt-project          detect stack + features, reverse-document into docs/STATE.md
+                        + docs/features/*, reconcile infra/secrets, hand back a report
+/audit                  severity-ranked findings → docs/AUDIT.md (read-only)
+/cleanup                safe, behaviour-preserving fixes from the audit
+/propose-improvements   prioritised roadmap → docs/ROADMAP.md, each item routed
+```
+
+After adoption the existing project uses the same day-to-day commands
+(`/status`, `/add-feature`, `/iterate-feature`, …) as a bootstrapped one.
 
 ## How design works (the part that usually rots)
 
