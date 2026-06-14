@@ -35,6 +35,11 @@ conflict), and each talks to its own Supabase via its own project `.mcp.json`.
 Set the shared servers once; per new project you only drop a Supabase
 `.mcp.json` + its env vars.
 
+Because the **github** server is user-scope (one account-wide PAT), a single agent
+can read and act across **all** the repos that token can reach — not just the
+current one. That's what `multi-repo-ops` (`/across-repos`) builds on; scope the
+PAT to the repos you want reachable (`secrets-manager`).
+
 ## Routing — which server for which job
 
 | Job | Server |

@@ -137,3 +137,19 @@ and audit are read-only; behaviour changes are deliberate, reviewable steps.
 **Alternatives considered:** a single "review" command (too coarse — couldn't be
 re-run per phase or routed); auto-migrating adopted projects onto the kit's stack
 (rejected — lock-in and churn, violates "respect what's there").
+
+## D18 — Cross-repo ops on the user-scope GitHub server, allowlisted + read-first
+**Context:** The user wants one agent to check and act across many of their GitHub
+repos, not just the open one. **Finding:** the **github** MCP server is already
+user-scope (one account-wide PAT — D10), so multi-repo reach exists without new
+infra; the gap was a safe procedure, not a connection. **Decision:** Add
+`multi-repo-ops` (`/across-repos`): resolve an explicit repo **allowlist** → fan
+out one read-only worker per repo (`parallel-agents`, reusing `code-auditor` for
+audits) → aggregate into one report → **act only when asked**, per repo via
+branch+PR, respecting each repo's own conventions. **Rationale:** cross-repo work
+is higher blast-radius, so default to read-only surveys, require an explicit set
+(never implicit "all repos"), confirm writes as a batch, and keep one PR per repo
+per concern. Composes with `code-audit`/`codebase-cleanup`/`improvement-planning`
+(run per repo, roll up). **Alternatives:** a dedicated multi-repo MCP server
+(unneeded — the user-scope github server already spans repos); auto-acting across
+repos (rejected — too risky without an allowlist + confirmation).

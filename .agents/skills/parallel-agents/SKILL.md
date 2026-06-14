@@ -42,6 +42,9 @@ ownership **non-overlapping** to avoid edit conflicts.
 - `code-auditor` (read-only review): for adopting/auditing a large existing repo,
   fan out one auditor per area or per review lens with non-overlapping ownership,
   then merge and de-duplicate their findings into `docs/AUDIT.md` (`code-audit`).
+- **Across repos** (`multi-repo-ops`, `/across-repos`): fan out one worker per
+  repo (each owning only its repo), survey in parallel, aggregate into one report;
+  any writes are per-repo branch+PR. Ideal parallel shape — fully independent units.
 
 ## Model selection per agent
 Match model to task: cheap/fast for mechanical subagents (boilerplate, renames),

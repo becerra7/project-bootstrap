@@ -4,6 +4,15 @@ Set up everything a project needs to run, automating all that's automatable and
 giving me a verified checklist of the rest. Use `mcp`, `secrets-manager`,
 `supabase-backend`, `cloudflare-deploy`, `firebase-distribution`.
 
+Works for **new and existing** projects. On an existing repo (after
+`/adopt-project`), **reconcile — never clobber**: detect MCP servers, secrets,
+and CI that already exist, reuse them, and only fill the gaps. Wire only the
+servers this project actually uses; don't add Supabase/Cloudflare/Firebase config
+for a stack that doesn't use them. The user-scope servers (GitHub, Cloudflare,
+Stitch, Playwright, Context7, Firebase) are machine-wide — set once, already
+shared by every project including this one, so onboarding an existing repo is
+mostly the project-scope piece + verification.
+
 1. **MCP (once per machine, shared):** check user-scope servers exist (GitHub,
    Cloudflare, Stitch, Playwright, Context7, Firebase) from `mcp/mcp.user.json`;
    help me add any missing ones. Then write this project's `.mcp.json` (Supabase,

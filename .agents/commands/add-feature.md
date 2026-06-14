@@ -21,4 +21,9 @@ Use the feature recipe from `scaffold-frontend` (and the
 Then build both targets and keep the tree green. Work on a `feature/<slug>`
 branch and open a PR per the `conventions` skill.
 
+The layering recipe above is the kit's KMP/Compose default. In an **adopted**
+project on a different stack, follow the project's own architecture as recorded in
+`docs/STATE.md` (and mirror the feature into the existing layers and test style)
+instead of forcing this exact order — same principle, the project's shape.
+
 The text after the command name is the feature description.

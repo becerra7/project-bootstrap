@@ -25,4 +25,6 @@ else
 fi
 
 bash "$DEST/bin/link.sh" "$TOOL" --target "$TARGET"
-echo "Installed. Next: copy AGENTS.md guidance into your project, run /onboard, then /new-project."
+echo "Installed. Next:"
+echo "  • new repo:      run /onboard, then /new-project"
+echo "  • existing repo: run /adopt-project (detect + document), then /audit, /cleanup, /onboard"

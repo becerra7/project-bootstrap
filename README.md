@@ -60,6 +60,9 @@ bin/install.sh --target /path/to/your/project --tool cursor   # or claude | code
 `/iterate-feature` · `/add-screen` · `/status` · `/onboard` · `/setup-infra` ·
 `/ship` · `/mode` · `/improve-kit`
 
+**Across many repos:** `/across-repos` — one agent surveys (and, when asked, acts
+on) a set of your GitHub repos at once, via the user-scope GitHub MCP server.
+
 ## Adopt an existing project
 
 The kit isn't only for greenfield. Point it at a repo you already have:

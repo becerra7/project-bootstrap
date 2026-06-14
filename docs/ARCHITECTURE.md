@@ -22,6 +22,7 @@ agentic-delivery-kit/
 │   │   ├── code-audit/        #   review existing code → severity-ranked docs/AUDIT.md
 │   │   ├── codebase-cleanup/  #   safe, behaviour-preserving cleanups from the audit
 │   │   ├── improvement-planning/ # findings+features → routed docs/ROADMAP.md
+│   │   ├── multi-repo-ops/    #   survey/act across MANY GitHub repos (user-scope MCP)
 │   │   ├── scaffold-frontend/ #   KMP/Compose (or web) skeleton (+assets, references)
 │   │   ├── design-bridge/     #   design manifest ↔ Stitch/Claude (+assets)
 │   │   ├── supabase-backend/  #   schema, RLS, Google auth (+assets)
@@ -41,9 +42,9 @@ agentic-delivery-kit/
 │   ├── subagents/             # product-architect, scaffolder, design-engineer,
 │   │                          #   release-engineer, code-auditor (read-only review)
 │   ├── commands/              # new-project, adopt-project, audit, cleanup,
-│   │                          #   propose-improvements, ideate, design, design-brief,
-│   │                          #   add-feature, iterate-feature, add-screen, status,
-│   │                          #   onboard, setup-infra, ship, mode, improve-kit
+│   │                          #   propose-improvements, across-repos, ideate, design,
+│   │                          #   design-brief, add-feature, iterate-feature, add-screen,
+│   │                          #   status, onboard, setup-infra, ship, mode, improve-kit
 │   └── behaviors/             # terse, explain, ship-fast, careful-review, architect
 ├── mcp/
 │   ├── mcp.user.json          # user-scope servers (shared across projects)

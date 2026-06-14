@@ -3,6 +3,23 @@
 All notable changes to the kit. Newest first. Every change to the kit must add an
 entry here (see `kit-maintenance`). Format: date — summary (files/areas).
 
+## 2026-06-14 — Cross-repo ops + brownfield onboarding polish (D18)
+- Added **`multi-repo-ops`** skill + **`/across-repos`** command — one agent surveys
+  (and, when asked, acts on) a set of GitHub repos via the user-scope github MCP:
+  resolve an explicit allowlist → fan out one read-only worker per repo → aggregate
+  → act per-repo via branch+PR. Read-only by default; writes opt-in + confirmed.
+  (`.agents/skills/multi-repo-ops/SKILL.md`, `.agents/commands/across-repos.md`)
+- Made onboarding brownfield-safe: `/onboard` now **reconciles** existing MCP/
+  secrets/CI instead of clobbering; `bin/install.sh` next-steps cover existing
+  repos (`/adopt-project` path), not just `/new-project`. (`.agents/commands/
+  onboard.md`, `bin/install.sh`)
+- `/add-feature` notes it follows the **adopted project's own architecture** (per
+  `docs/STATE.md`) when the stack isn't the kit's KMP default. (`.agents/commands/
+  add-feature.md`)
+- Cross-references: `README.md` (across-repos), `docs/ARCHITECTURE.md` (file map),
+  `docs/DECISIONS.md` (D18), `mcp` skill (user-scope github spans all repos),
+  `parallel-agents` (per-repo fan-out).
+
 ## 2026-06-14 — Brownfield path: adopt & improve existing projects (D17)
 - Added **`project-adoption`** orchestrator skill + **`/adopt-project`** command —
   the brownfield mirror of `project-bootstrap`: detect the real stack, reverse-
