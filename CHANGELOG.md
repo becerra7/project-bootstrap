@@ -3,6 +3,13 @@
 All notable changes to the kit. Newest first. Every change to the kit must add an
 entry here (see `kit-maintenance`). Format: date — summary (files/areas).
 
+## 2026-06-16 — Fix: install.sh/link.sh failed under `set -u`
+- `bin/link.sh` errored with `tool: unbound variable` because a single `local
+  tool="$1" dir="$TARGET/.$tool"` expands `$tool` before it's assigned (nounset).
+  Split into two `local` statements. Verified `bin/install.sh --target … --tool
+  claude` now vendors the kit + links `.claude/` (skills, commands, agents) +
+  `.mcp.json` into a target repo without touching the project's own files.
+
 ## 2026-06-14 — Cross-repo ops + brownfield onboarding polish (D18)
 - Added **`multi-repo-ops`** skill + **`/across-repos`** command — one agent surveys
   (and, when asked, acts on) a set of GitHub repos via the user-scope github MCP:
