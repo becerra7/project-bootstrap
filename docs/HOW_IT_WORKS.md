@@ -30,7 +30,7 @@ ideation   architect                engineer  backend     deploy        payments
 `project-bootstrap` is the orchestrator that runs this. `/new-project` kicks it
 off; day-to-day you use `/ideate`, `/design`, `/design-brief`, `/add-feature`,
 `/iterate-feature`, `/status`, `/onboard`, `/setup-infra`, `/ship`, `/mode`,
-`/improve-kit`.
+`/improve-kit`, `/update-kit`.
 
 ## Three big ideas
 

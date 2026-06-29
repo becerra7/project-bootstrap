@@ -31,7 +31,21 @@ hatch) · Supabase (Postgres + Auth + RLS, Google sign-in) · Cloudflare Pages +
 optional Worker (staging + production) · Firebase App Distribution · optional
 Stripe · GitHub Actions.
 
-## Install into a project
+## Start a new project (recommended: GitHub template)
+
+Mark this repo as a **template** (Settings → ✅ "Template repository"), then for
+each product click **"Use this template"** to get a new repo that already
+contains the kit. Open a Claude Code session on it and just run:
+
+```
+/new-project <your idea>     # /onboard first if infra/secrets aren't set up yet
+```
+
+No setup message to paste: `CLAUDE.md` is auto-loaded and a **SessionStart hook**
+(`.claude/settings.json`) runs `bin/link.sh claude` to wire the kit's
+skills/commands/subagents and write `.mcp.json`.
+
+## Install into an existing project
 
 ```bash
 # from this kit directory
@@ -44,11 +58,27 @@ bin/install.sh --target /path/to/your/project --tool cursor   # or claude | code
 `bin/link.sh <tool>` symlinks the neutral `.agents/` content into `.cursor/`,
 `.claude/`, or `.codex/`. Project-level config always overrides the global copy.
 
+## Updating the kit in a project
+
+A template/vendored copy is point-in-time — it does not auto-update. Pull later
+kit improvements deliberately:
+
+```
+/update-kit [ref]            # or: bin/update-kit.sh [tag|branch|sha]
+```
+
+It overwrites only **kit-owned** paths (`.agents/`, `bin/`, `mcp/`, `AGENTS.md`,
+`CLAUDE.md`, `KIT_VERSION`, `.claude/settings.json`, kit `docs/*`) and never your
+product code, `docs/STATE.md`, feature docs, `design/`, `supabase/`, `.github/`,
+or secrets — so you review a clean `git diff` and commit. The version you're on
+is in `KIT_VERSION`; `/status` reports it. Override the source with
+`KIT_REMOTE=<git-url>`.
+
 ## Commands
 
 `/new-project` · `/ideate` · `/design` · `/design-brief` · `/add-feature` ·
 `/iterate-feature` · `/add-screen` · `/status` · `/onboard` · `/setup-infra` ·
-`/ship` · `/mode` · `/improve-kit`
+`/ship` · `/mode` · `/improve-kit` · `/update-kit`
 
 ## How design works (the part that usually rots)
 

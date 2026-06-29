@@ -78,6 +78,11 @@ updated** (this is what prevents drift).
 
 ## Step 3 — track the change (mandatory)
 - Append a dated entry to **`CHANGELOG.md`**: what changed + which files.
+- Bump **`KIT_VERSION`** (semver) when the change is a release consumers should
+  be able to pull via `/update-kit` (feature → minor, fix → patch). This is the
+  pin `/status` reports and `bin/update-kit.sh` compares against.
+- If you add a kit-owned top-level path, add it to the `KIT_PATHS` list in
+  `bin/update-kit.sh` so `/update-kit` actually syncs it.
 - Add a **`docs/DECISIONS.md`** entry when the change reflects a *decision*
   (a why/trade-off), so future agents understand intent, not just diff.
 - Keep commits small and logical; one concern per commit/PR. Update `README.md`

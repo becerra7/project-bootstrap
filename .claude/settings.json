@@ -1,0 +1,14 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash bin/link.sh claude >/dev/null 2>&1 || true"
+          }
+        ]
+      }
+    ]
+  }
+}

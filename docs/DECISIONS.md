@@ -112,3 +112,29 @@ maintainability.
 multiple agents effectively. Encoded as `/mode` + `.agents/behaviors/*`, the
 `token-efficiency` skill, and the `parallel-agents` skill, all referenced by
 `AGENTS.md`.
+
+## D17 — Distribute by vendoring + explicit `/update-kit`, not a live link
+**Context:** Projects are created from this kit (GitHub template or `install.sh`).
+A template is a point-in-time copy; the user asked how kit updates reach existing
+projects. **Decision:** Keep the kit **vendored** per project (stability — a kit
+edit can't silently change a shipped product's pipeline) and pull updates
+deliberately via `bin/update-kit.sh` / `/update-kit`, which overwrites only
+**kit-owned** paths and records a `KIT_VERSION` pin; product code/state/design/
+migrations/CI/secrets are never touched. **Rationale:** Reviewable (`git diff`),
+per-project opt-in, continuable, and works in cloud sessions regardless of MCP
+repo scope (it just clones the public kit remote). **Alternatives:** git submodule
+(clunky in cloud/CI, needs `--recurse-submodules`); live template link (GitHub has
+none); auto-update on every session (would destabilise shipped products).
+
+## D18 — Zero-paste sessions via auto-loaded `CLAUDE.md` + SessionStart hook
+**Context:** A Claude Code (web) session is anchored to a repo but otherwise
+starts cold; the user didn't want to paste a setup message each time. **Decision:**
+Ship `CLAUDE.md` (auto-loaded into context, orients by situation) and
+`.claude/settings.json` with a SessionStart hook that runs `bin/link.sh claude`
+to expose skills/commands/subagents and write `.mcp.json`. So the only input is
+the intent (`/new-project <idea>`). **Rationale:** Removes per-project toil while
+staying tool-honest — commands are plain markdown the agent can follow even if not
+registered yet. The generated tool symlinks are absolute/non-portable, so they're
+gitignored and regenerated each session; only `.claude/settings.json` is committed.
+**Alternatives:** commit the symlinks (break on clone — absolute paths); rely on the
+user pasting boilerplate (the toil we're removing).

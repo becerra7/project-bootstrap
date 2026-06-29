@@ -11,5 +11,12 @@ playwright/.auth/
 .DS_Store
 *.log
 
-# Tool-generated symlinks created by bin/link.sh in CONSUMER projects
-# (not relevant in this kit repo, listed for clarity)
+# Tool wiring regenerated each session by bin/link.sh (via the SessionStart hook).
+# These are absolute symlinks, not portable, so they are never committed.
+# Keep .claude/settings.json tracked (it holds the hook), ignore only the symlinks.
+.claude/skills
+.claude/commands
+.claude/agents
+.cursor/
+.codex/
+.mcp.json

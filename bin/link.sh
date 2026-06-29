@@ -18,7 +18,8 @@ KIT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 SRC="$KIT/.agents"
 
 link_one() {
-  local tool="$1" dir="$TARGET/.$tool"
+  local tool="$1"
+  local dir="$TARGET/.$tool"
   mkdir -p "$dir"
   # skills + commands map 1:1; subagents -> agents for tools that use that name.
   ln -sfn "$SRC/skills"    "$dir/skills"

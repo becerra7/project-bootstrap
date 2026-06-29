@@ -158,4 +158,4 @@ time.
 - Subagents: `product-architect`, `scaffolder`, `design-engineer`, `release-engineer`.
 - Commands: `/new-project`, `/onboard`, `/ideate`, `/design`, `/design-brief`,
   `/add-feature`, `/iterate-feature`, `/add-screen`, `/status`, `/setup-infra`,
-  `/ship`, `/mode`, `/improve-kit`.
+  `/ship`, `/mode`, `/improve-kit`, `/update-kit`.

@@ -69,6 +69,17 @@ One home per secret. GitHub Actions = canonical CI/runtime store (write-only).
 Gitignored local mirror = the readable source. Committed manifest = the index
 (names only). Never commit values. See `secrets-manager`.
 
+## Distribution & updates
+
+A product **vendors** the kit (GitHub "Use this template", or `bin/install.sh`) —
+a point-in-time copy, not a live link. Pull later kit improvements deliberately
+with `/update-kit` (`bin/update-kit.sh`), which overwrites only kit-owned paths
+(`.agents/`, `bin/`, `mcp/`, `AGENTS.md`, `CLAUDE.md`, `KIT_VERSION`,
+`.claude/settings.json`, kit `docs/*`) and never product code, state, design,
+migrations, CI, or secrets. The kit version is pinned in `KIT_VERSION`. A fresh
+Claude Code session needs no setup paste: `CLAUDE.md` is auto-loaded and a
+SessionStart hook runs `bin/link.sh` to wire skills/commands/subagents + `.mcp.json`.
+
 ## Self-improvement (when changing THIS kit)
 
 Every change to the kit must: follow `kit-maintenance` (update the right

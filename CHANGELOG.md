@@ -3,6 +3,22 @@
 All notable changes to the kit. Newest first. Every change to the kit must add an
 entry here (see `kit-maintenance`). Format: date — summary (files/areas).
 
+## 2026-06-29 — Zero-paste sessions + versioned kit distribution (v0.2)
+- Added **zero-setup session bootstrap**: `CLAUDE.md` (auto-loaded orientation)
+  + `.claude/settings.json` SessionStart hook that runs `bin/link.sh claude` to
+  wire skills/commands/subagents + `.mcp.json` — a fresh session needs no paste,
+  just `/new-project <idea>` (D18).
+- Added **versioned kit distribution**: `KIT_VERSION` pin + `bin/update-kit.sh`
+  + `/update-kit` command. Template/vendored copies pull updates deliberately;
+  update syncs only kit-owned paths and never product code/state/secrets (D17).
+- `/status` now reports `KIT_VERSION` and flags when a newer kit exists.
+- Fixed `bin/link.sh`: split a same-line `local tool=… dir=…$tool` that failed
+  under `set -u` ("tool: unbound variable"), which had silently broken wiring.
+- Cross-refs updated: `AGENTS.md` (Distribution & updates), `README.md`
+  (template + update flow + commands), `docs/ARCHITECTURE.md` (file map +
+  kit-owned vs project-owned), `project-bootstrap` + `kit-maintenance` skills,
+  `.gitignore` (ignore regenerated tool symlinks, keep `.claude/settings.json`).
+
 ## 2026-06-06 — Standalone, tool-agnostic, self-improving kit (v0.1)
 - Restructured into a standalone repo with neutral `.agents/` source + `AGENTS.md`
   constitution + `bin/link.sh` adapters for Cursor/Claude/Codex (D14, D15).
